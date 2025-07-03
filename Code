@@ -1,0 +1,51 @@
+#Code
+SQL schema 
+CREATE TABLE Customers (
+    customer_id INT,
+    name VARCHAR(50),
+    city VARCHAR(50)
+);
+
+CREATE TABLE Orders (
+    order_id INT,
+    customer_id INT,
+    total_amount DECIMAL(10,2),
+    order_date DATE
+);
+
+INSERT INTO Customers VALUES (1, 'Aditi', 'Mumbai');
+INSERT INTO Customers VALUES (2, 'Rahul', 'Delhi');
+
+CREATE VIEW CustomerTotalOrders AS
+SELECT c.customer_id, c.name, SUM(o.total_amount) AS total_spent
+FROM Customers c
+JOIN Orders o ON c.customer_id = o.customer_id
+GROUP BY c.customer_id, c.name;
+
+
+INSERT INTO Orders VALUES (101, 1, 500.00, '2025-06-01');
+INSERT INTO Orders VALUES (102, 2, 700.00, '2025-06-02');
+
+CREATE VIEW CustomerOrderSummary AS
+SELECT c.customer_id, c.name, c.city, o.order_id, o.total_amount
+FROM Customers c
+JOIN Orders o ON c.customer_id = o.customer_id;
+
+
+SQL Query
+SELECT * FROM CustomerOrderSummary;
+
+UPDATE Customers
+SET city = 'Pune'
+WHERE customer_id =SELECT * FROM CustomerOrderSummary;
+
+SELECT * FROM CustomerOrderSummary WHERE city = 'Mumbai';
+
+UPDATE Customers
+SET city = 'Pune'
+WHERE customer_id = 2;
+
+SELECT * FROM CustomerOrderSummary;
+
+SELECT * FROM CustomerTotalOrders; 2;
+ 
